@@ -2,6 +2,7 @@ package com.soues.favoritesproject.controller;
 
 import com.soues.favoritesproject.dto.FavoriteDefinition;
 import com.soues.favoritesproject.dto.FavoriteItem;
+import com.soues.favoritesproject.dto.SortParam;
 import com.soues.favoritesproject.service.IFavoriteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,19 @@ public class FavoritesController {
         return favoriteService.findAll();
     }
 
-
     @GetMapping(path = "/{id}")
     FavoriteItem findOne(@PathVariable long id) {
         return favoriteService.findOne(id);
+    }
+
+
+    @GetMapping(path = "/dateOrder/{sortParam}")
+    List<FavoriteItem> findAllOrderByDate(@PathVariable(name = "sortParam") SortParam sortParam) {
+        return favoriteService.findAllByOrderByDate(sortParam);
+    }
+    @GetMapping(path = "/categoryOrder/{sortParam}")
+    List<FavoriteItem> findAllOrderByCategoryLabel(@PathVariable(name = "sortParam") SortParam sortParam) {
+        return favoriteService.findAllByOrderByCategoryLabel(sortParam);
     }
 
     @PostMapping(path = "/{categoryId}/favorite")
